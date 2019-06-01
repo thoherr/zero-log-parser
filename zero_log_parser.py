@@ -25,14 +25,14 @@ from math import trunc
 
 
 # offsets of static data
-ADDRESS_SERIAL = 0x210 # was 0x200
-MAX_LENGTH_SERIAL = 21
-ADDRESS_VIN = 0x252 # was 0x240
-MAX_LENGTH_VIN = 17
-ADDRESS_FIRMWARE_REV = 0x266 # ?? (gives correct result) was 0x27b
-ADDRESS_BOARD_REV = 0x269 # ?? (gives plausible result) was 0x27d
-ADDRESS_BIKE_MODEL = 0x26c  # was 0x27f
-MAX_LENGTH_BIKE_MODEL = 3
+ADDRESS_MBB_SERIAL = 0x210 # was 0x200
+MAX_LENGTH_MBB_SERIAL = 21
+ADDRESS_MBB_VIN = 0x252 # was 0x240
+MAX_LENGTH_MBB_VIN = 17
+ADDRESS_MBB_FIRMWARE_REV = 0x266 # ?? (gives correct result) was 0x27b
+ADDRESS_MBB_BOARD_REV = 0x269 # ?? (gives plausible result) was 0x27d
+ADDRESS_MBB_BIKE_MODEL = 0x26c  # was 0x27f
+MAX_LENGTH_MBB_BIKE_MODEL = 3
 
 TIME_FORMAT = '%m/%d/%Y %H:%M:%S'
 USE_MBB_TIME = True
@@ -752,11 +752,11 @@ def parse_log(bin_file, output_file):
     sys_info = OrderedDict()
     if log_type == 'MBB':
         # ignore decode errors, static addresses may be incorrect 
-        sys_info['Serial number'] = log.unpack('char', ADDRESS_SERIAL, count=MAX_LENGTH_SERIAL).partition(b'\0')[0].decode('utf-8', 'ignore')
-        sys_info['VIN'] = log.unpack('char', ADDRESS_VIN, count=MAX_LENGTH_VIN).partition(b'\0')[0].decode('utf-8', 'ignore')
-        sys_info['Firmware rev.'] = log.unpack('uint16', ADDRESS_FIRMWARE_REV)
-        sys_info['Board rev.'] = log.unpack('uint16', ADDRESS_BOARD_REV)
-        sys_info['Model'] = log.unpack('char', ADDRESS_BIKE_MODEL, count=MAX_LENGTH_BIKE_MODEL).partition(b'\0')[0].decode('utf-8', 'ignore')
+        sys_info['Serial number'] = log.unpack('char', ADDRESS_MBB_SERIAL, count=MAX_LENGTH_MBB_SERIAL).partition(b'\0')[0].decode('utf-8', 'ignore')
+        sys_info['VIN'] = log.unpack('char', ADDRESS_MBB_VIN, count=MAX_LENGTH_MBB_VIN).partition(b'\0')[0].decode('utf-8', 'ignore')
+        sys_info['Firmware rev.'] = log.unpack('uint16', ADDRESS_MBB_FIRMWARE_REV)
+        sys_info['Board rev.'] = log.unpack('uint16', ADDRESS_MBB_BOARD_REV)
+        sys_info['Model'] = log.unpack('char', ADDRESS_MBB_BIKE_MODEL, count=MAX_LENGTH_MBB_BIKE_MODEL).partition(b'\0')[0].decode('utf-8', 'ignore')
     if log_type == 'BMS':
         sys_info['Initial date'] = log.unpack('char', 0x12, count=20).decode('utf-8', 'ignore')    
         sys_info['BMS serial number'] = log.unpack('char', 0x300, count=21).decode('utf-8', 'ignore')
