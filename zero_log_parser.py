@@ -342,6 +342,16 @@ def parse_entry(log_data, address, unhandled):
             'conditions': ''
         }
 
+    def high_throttle_disable(x):
+        fields = {
+            'throttle': BinaryTools.unpack('uint16', x, 0x00)
+        }
+        return {
+            'event': 'High Throttle disable',
+            'conditions': ('Throttle: {throttle}mV').format(**fields)
+        }
+
+
     def board_status(x):
         causes = {
             0x04: 'Software',
@@ -681,7 +691,7 @@ def parse_entry(log_data, address, unhandled):
     parsers = {
         # Unknown entry types to be added when defined: type, length, source, example
         0x01: board_status,
-        #0x02: unknown, 2, 6350_MBB_2016-04-12, 0x02 0x2e 0x11 ???
+        0x02: high_throttle_disable,
         0x03: bms_discharge_level,
         0x04: bms_charge_full,
         #0x05: unknown, 17, 6890_BMS0_2016-07-03, 0x05 0x34 0x0b 0xe0 0x0c 0x35 0x2a 0x89 0x71 0xb5 0x01 0x00 0xa5 0x62 0x01 0x00 0x20 0x90 ???
