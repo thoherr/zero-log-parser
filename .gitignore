@@ -11,3 +11,6 @@
 /logs/
 *.bin
 *.zip
+
+# Mac Stuff
+.DS_Store
