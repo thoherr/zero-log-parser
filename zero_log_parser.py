@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python2.7
 
 '''
 Little decoder utility to parse Zero Motorcycle main bike board (MBB) and
